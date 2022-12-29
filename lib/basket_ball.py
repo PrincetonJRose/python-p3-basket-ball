@@ -1,3 +1,6 @@
+import ipdb
+from statistics import mean
+
 def game_dict():
     return {
         "home": {
@@ -182,3 +185,66 @@ def game_dict():
             ]
         }
     }
+
+
+# helper methods here!!!
+def all_players():
+    players = []
+    for team in game_dict():
+        players = players + game_dict()[team]['players']
+    return players
+
+def get_player_by_name( name ):
+    for player in all_players():
+        if player['name'] == name:
+            return player
+
+def all_teams():
+    return [ game_dict()[team] for team in game_dict() ]
+
+def get_team_by_name( team_name ):
+    pass
+    for team in all_teams():
+        if team['team_name'] == team_name:
+            return team
+
+
+# methods for deliverables below here!
+def num_points_per_game( name ):
+    pass
+    return get_player_by_name( name )['points_per_game']
+
+def player_age( name ):
+    pass
+    return get_player_by_name( name )['age']
+
+def team_colors( team_name ):
+    pass
+    return get_team_by_name( team_name )['colors']
+
+def team_names():
+    pass
+    return [ team['team_name'] for team in all_teams() ]
+
+def player_numbers( team_name ):
+    pass
+    return [ player['number'] for player in get_team_by_name( team_name )['players'] ]
+
+def player_stats( player_name ):
+    pass
+    return get_player_by_name( player_name )
+
+
+def average_rebounds_by_shoe_brand():
+    pass
+    shoe_brands = {}
+    for player in all_players():
+        if player['shoe_brand'] in shoe_brands:
+            shoe_brands[ player['shoe_brand'] ].append( player['rebounds_per_game'] )
+        else: shoe_brands[ player['shoe_brand'] ] = [ player['rebounds_per_game'] ]
+    averages = {}
+    for brand in shoe_brands:
+        averages[ brand ] = round( mean( shoe_brands[ brand ] ), 2 )
+    [ print( f"{ brand }:  %.2f" % averages[ brand ] ) for brand in averages ]
+
+# ipdb.set_trace()
